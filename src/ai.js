@@ -41,7 +41,7 @@ export class AIManager {
   async processUserMessage(input, progressCallback) {
     if (!this.chat) this.initChat();
 
-    let response = await this.chat.sendMessage(input);
+    let response = await this.chat.sendMessage({ message: input });
 
     // Loop for handling autonomous function calls (up to 5 iterations)
     let loops = 0;
@@ -69,7 +69,7 @@ export class AIManager {
       }
 
       // Send tool outputs back to model to continue conversation
-      response = await this.chat.sendMessage(toolResults);
+      response = await this.chat.sendMessage({ message: toolResults });
     }
 
     return response.text || 'Ответ от AI получен (без текста).';
